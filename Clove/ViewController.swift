@@ -13,12 +13,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     //Outlets
     @IBOutlet weak var recordingTimeLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     //Variables
     var audioRecorder: AVAudioRecorder!
     var meterTimer:Timer!
     var isAudioRecordingGranted: Bool!
-    
+    var tracks: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         default:
             break
         }
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -98,6 +102,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder = nil
         meterTimer.invalidate()
         
+        let dateFormatter : DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        self.tracks.append(dateString)
+        self.tableView.reloadData()
+        
         if success {
             print("Recording finished successfully.")
         } else {
@@ -130,5 +140,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         if !flag {
             finishAudioRecording(success: false)
         }
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension ViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tracks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = tracks[indexPath.row]
+        return cell
     }
 }
