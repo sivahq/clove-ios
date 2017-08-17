@@ -18,6 +18,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     //Variables
     var audioRecorder: AVAudioRecorder!
+    var audioPlayer: AVAudioPlayer!
     var meterTimer:Timer!
     var isAudioRecordingGranted: Bool!
     var tracks: [NSManagedObject] = []
@@ -95,7 +96,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
                 ]
                 //Create audio file name URL
                 trackInProgress = randomString(length: 12)
-                let audioFilename = getDocumentsDirectory().appendingPathComponent("\(trackInProgress).m4a")
+                let audioFilename = getDocumentsDirectory().appendingPathComponent("\(trackInProgress!).m4a")
                 //Create the audio recording, and assign ourselves as the delegate
                 audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
                 audioRecorder.delegate = self
@@ -204,3 +205,25 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - UITableViewDelegate
+extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let track = tracks[indexPath.row]
+        if let trackId = track.value(forKey: "name") as? String {
+            
+            let audioFilename = getDocumentsDirectory().appendingPathComponent("\(trackId).m4a")
+            do{
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                audioPlayer = try AVAudioPlayer(contentsOf:audioFilename)
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            }catch let error as NSError {
+                print("Could not play. \(error), \(error.userInfo)")
+            }
+        }
+    }
+}
+
