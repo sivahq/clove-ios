@@ -122,6 +122,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             audioRecorder.stop()
             audioRecorder = nil
             meterTimer.invalidate()
+            recordingTimeLabel.text = String(format: "%02d:%02d:%02d", 0, 0, 0)
             
             self.save(name: trackInProgress)
             trackInProgress = nil
