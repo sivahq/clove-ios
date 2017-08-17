@@ -22,6 +22,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     var isAudioRecordingGranted: Bool!
     var tracks: [NSManagedObject] = []
     var managedContext: NSManagedObjectContext!
+    var trackInProgress: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,7 +94,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
                     AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
                 ]
                 //Create audio file name URL
-                let audioFilename = getDocumentsDirectory().appendingPathComponent("audioRecording.m4a")
+                trackInProgress = randomString(length: 12)
+                let audioFilename = getDocumentsDirectory().appendingPathComponent("\(trackInProgress).m4a")
                 //Create the audio recording, and assign ourselves as the delegate
                 audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
                 audioRecorder.delegate = self
@@ -115,21 +117,20 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     func finishAudioRecording(success: Bool) {
         
-        audioRecorder.stop()
-        audioRecorder = nil
-        meterTimer.invalidate()
-        
-        let dateFormatter : DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = dateFormatter.string(from: Date())
-
-        self.save(name: dateString)
-        self.tableView.reloadData()
-        
-        if success {
-            print("Recording finished successfully.")
-        } else {
-            print("Recording failed :(")
+        if(trackInProgress != nil) {
+            audioRecorder.stop()
+            audioRecorder = nil
+            meterTimer.invalidate()
+            
+            self.save(name: trackInProgress)
+            trackInProgress = nil
+            self.tableView.reloadData()
+            
+            if success {
+                print("Recording finished successfully.")
+            } else {
+                print("Recording failed :(")
+            }
         }
     }
     
@@ -143,6 +144,22 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
+    }
+    
+    func randomString(length: Int) -> String {
+        
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
     }
     
     func updateAudioMeter(timer: Timer) {
