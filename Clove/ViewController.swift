@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class ViewController: UIViewController, AVAudioRecorderDelegate {
     
@@ -19,10 +20,14 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     var audioRecorder: AVAudioRecorder!
     var meterTimer:Timer!
     var isAudioRecordingGranted: Bool!
-    var tracks: [String] = []
+    var tracks: [NSManagedObject] = []
+    var managedContext: NSManagedObjectContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        managedContext = appDelegate.persistentContainer.viewContext
         
         switch AVAudioSession.sharedInstance().recordPermission() {
         case AVAudioSessionRecordPermission.granted:
@@ -48,6 +53,18 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Track")
+        do {
+            tracks = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -105,13 +122,26 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         let dateFormatter : DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = dateFormatter.string(from: Date())
-        self.tracks.append(dateString)
+
+        self.save(name: dateString)
         self.tableView.reloadData()
         
         if success {
             print("Recording finished successfully.")
         } else {
             print("Recording failed :(")
+        }
+    }
+    
+    func save(name: String) {
+        let entity = NSEntityDescription.entity(forEntityName: "Track", in: managedContext)!
+        let track = NSManagedObject(entity: entity, insertInto: managedContext)
+        track.setValue(name, forKeyPath: "name")
+        do {
+            try managedContext.save()
+            tracks.append(track)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
     
@@ -151,8 +181,9 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let track = tracks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = tracks[indexPath.row]
+        cell.textLabel?.text = track.value(forKey: "name") as? String
         return cell
     }
 }
