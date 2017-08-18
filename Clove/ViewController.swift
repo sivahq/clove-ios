@@ -23,7 +23,9 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     var isAudioRecordingGranted: Bool!
     var tracks: [NSManagedObject] = []
     var managedContext: NSManagedObjectContext!
+    
     var trackInProgress: String!
+    var startTime: Date!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +104,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
                 audioRecorder.delegate = self
                 audioRecorder.isMeteringEnabled = true
                 audioRecorder.record()
+                startTime = NSDate() as Date!
                 meterTimer = Timer.scheduledTimer(timeInterval: 0.1, target:self, selector:#selector(self.updateAudioMeter(timer:)), userInfo:nil, repeats:true)
             }
             catch let error {
@@ -124,8 +127,19 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             meterTimer.invalidate()
             recordingTimeLabel.text = String(format: "%02d:%02d:%02d", 0, 0, 0)
             
-            self.save(name: trackInProgress)
+            var duration = 0
+            let audioFilename = getDocumentsDirectory().appendingPathComponent("\(trackInProgress!).m4a")
+            do{
+                audioPlayer = try AVAudioPlayer(contentsOf:audioFilename)
+                duration = Int(audioPlayer.duration)
+                print(duration)
+            }catch let error as NSError {
+                print("Could not find duration. \(error), \(error.userInfo)")
+            }
+            
+            self.save(id: trackInProgress!, name: "Track#\(trackInProgress!)", createdTime: startTime, duration: duration)
             trackInProgress = nil
+            startTime = nil
             self.tableView.reloadData()
             
             if success {
@@ -136,10 +150,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
-    func save(name: String) {
+    func save(id: String, name: String, createdTime: Date, duration: Int) {
         let entity = NSEntityDescription.entity(forEntityName: "Track", in: managedContext)!
         let track = NSManagedObject(entity: entity, insertInto: managedContext)
+        track.setValue(id, forKeyPath: "id")
         track.setValue(name, forKeyPath: "name")
+        track.setValue(createdTime, forKeyPath: "createdTime")
+        track.setValue(duration, forKeyPath: "duration")
         do {
             try managedContext.save()
             tracks.append(track)
@@ -212,7 +229,7 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let track = tracks[indexPath.row]
-        if let trackId = track.value(forKey: "name") as? String {
+        if let trackId = track.value(forKey: "id") as? String {
             
             let audioFilename = getDocumentsDirectory().appendingPathComponent("\(trackId).m4a")
             do{
