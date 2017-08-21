@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  Clove
 //
-//  Created by Sivaprakash Ragavan on 8/17/17.
+//  Created by Sivaprakash Ragavan on 8/21/17.
 //  Copyright © 2017 Clove HQ. All rights reserved.
 //
 
@@ -10,12 +10,8 @@ import UIKit
 import AVFoundation
 import CoreData
 
-class ViewController: UIViewController, AVAudioRecorderDelegate {
-    
-    //Outlets
-    @IBOutlet weak var recordingTimeLabel: UILabel!
-    @IBOutlet weak var tableView: UITableView!
-    
+class HomeViewController: UIViewController, AVAudioRecorderDelegate {
+
     //Variables
     var audioRecorder: AVAudioRecorder!
     var audioPlayer: AVAudioPlayer!
@@ -29,6 +25,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        initViewElements()
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         managedContext = appDelegate.persistentContainer.viewContext
@@ -55,10 +52,12 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             break
         }
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        
     }
     
+    override func updateViewConstraints() {
+        positionViewElements()
+        super.updateViewConstraints()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -76,9 +75,66 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         
         audioRecorder = nil
     }
+
     
+    lazy var recordingTimeLabel: UILabel! = {
+        let view = UILabel()
+        view.text = "00:00:00"
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.textAlignment = .center
+        return view
+    }()
+    
+    lazy var recordButton: UIButton! = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(audioRecorderAction(_:)), for: .touchDown)
+        view.setTitle("Record", for: .normal)
+        view.setTitleColor(UIColor.blue, for: .normal)
+        return view
+    }()
+    
+    lazy var stopButton: UIButton! = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(stopAudioRecordingAction(_:)), for: .touchDown)
+        view.setTitle("Stop", for: .normal)
+        view.setTitleColor(UIColor.blue, for: .normal)
+        return view
+    }()
+    
+    lazy var tableView: UITableView! = {
+        let view = UITableView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        view.dataSource = self
+        view.delegate = self
+        return view
+    }()
+
+    func initViewElements() {
+        view.addSubview(recordingTimeLabel)
+        view.addSubview(recordButton)
+        view.addSubview(stopButton)
+        view.addSubview(tableView)
+        view.setNeedsUpdateConstraints()
+    }
+    
+    func positionViewElements() {
+        stopButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 30).isActive = true
+        tableView.topAnchor.constraint(equalTo: recordButton.bottomAnchor, constant: 30).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: -16).isActive = true
+        view.layoutMarginsGuide.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -16).isActive = true
+        recordButton.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 30).isActive = true
+        recordButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        recordButton.leadingAnchor.constraint(equalTo: stopButton.trailingAnchor, constant: 25).isActive = true
+        recordingTimeLabel.leadingAnchor.constraint(equalTo: recordButton.trailingAnchor, constant: 25).isActive = true
+        recordingTimeLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 35).isActive = true
+        bottomLayoutGuide.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+    }
+
     //MARK:- Audio recorder buttons action.
-    @IBAction func audioRecorderAction(_ sender: UIButton) {
+    func audioRecorderAction(_ sender: UIButton) {
         
         if isAudioRecordingGranted {
             
@@ -113,7 +169,7 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
-    @IBAction func stopAudioRecordingAction(_ sender: UIButton) {
+    func stopAudioRecordingAction(_ sender: UIButton) {
         
         finishAudioRecording(success: true)
         
@@ -207,10 +263,13 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
             finishAudioRecording(success: false)
         }
     }
+
 }
 
+
+
 // MARK: - UITableViewDataSource
-extension ViewController: UITableViewDataSource {
+extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tracks.count
@@ -225,7 +284,7 @@ extension ViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
-extension ViewController: UITableViewDelegate {
+extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let track = tracks[indexPath.row]
