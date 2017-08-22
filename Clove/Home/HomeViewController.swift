@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import CoreData
 
 class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     
@@ -17,18 +16,19 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     var audioPlayer: AVAudioPlayer!
     var meterTimer:Timer!
     var isAudioRecordingGranted: Bool!
-    var records: [NSManagedObject] = []
-    var managedContext: NSManagedObjectContext!
     
     var recordInProgress: String!
     var startTime: Date!
     
+    var recordsDataSource: RecordsTableDataSource?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initViewElements()
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        managedContext = appDelegate.persistentContainer.viewContext
+        recordsDataSource = RecordsTableDataSource()
+        tableView.dataSource = recordsDataSource
+
+        initViewElements()
         
         switch AVAudioSession.sharedInstance().recordPermission() {
         case AVAudioSessionRecordPermission.granted:
@@ -59,20 +59,8 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
         super.updateViewConstraints()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
-        do {
-            records = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
         audioRecorder = nil
     }
     
@@ -106,8 +94,7 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     lazy var tableView: UITableView! = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(RecordsTableViewCell.self, forCellReuseIdentifier: "Record")
-        view.dataSource = self
+        view.register(RecordsTableItem.self, forCellReuseIdentifier: "Record")
         view.delegate = self
         return view
     }()
@@ -153,8 +140,8 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
                     AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
                 ]
                 //Create audio file name URL
-                recordInProgress = randomString(length: 12)
-                let audioFilename = getDocumentsDirectory().appendingPathComponent("\(recordInProgress!).m4a")
+                recordInProgress = Utilities.randomString(length: 12)
+                let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(recordInProgress!).m4a")
                 //Create the audio recording, and assign ourselves as the delegate
                 audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
                 audioRecorder.delegate = self
@@ -170,13 +157,10 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func stopAudioRecordingAction(_ sender: UIButton) {
-        
         finishAudioRecording(success: true)
-        
     }
     
     func finishAudioRecording(success: Bool) {
-        
         if(recordInProgress != nil) {
             audioRecorder.stop()
             audioRecorder = nil
@@ -184,7 +168,7 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
             recordingTimeLabel.text = String(format: "%02d:%02d:%02d", 0, 0, 0)
             
             var duration = 0
-            let audioFilename = getDocumentsDirectory().appendingPathComponent("\(recordInProgress!).m4a")
+            let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(recordInProgress!).m4a")
             do{
                 audioPlayer = try AVAudioPlayer(contentsOf:audioFilename)
                 duration = Int(audioPlayer.duration)
@@ -193,7 +177,7 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
                 print("Could not find duration. \(error), \(error.userInfo)")
             }
             
-            self.save(id: recordInProgress!, startTime: startTime, duration: duration)
+            recordsDataSource?.addRecord(id: recordInProgress!, startTime: startTime, duration: duration)
             recordInProgress = nil
             startTime = nil
             self.tableView.reloadData()
@@ -206,38 +190,7 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
-    func save(id: String, startTime: Date, duration: Int) {
-        let entity = NSEntityDescription.entity(forEntityName: "Record", in: managedContext)!
-        let record = NSManagedObject(entity: entity, insertInto: managedContext)
-        record.setValue(id, forKeyPath: "id")
-        record.setValue(startTime, forKeyPath: "startTime")
-        record.setValue(duration, forKeyPath: "duration")
-        do {
-            try managedContext.save()
-            records.append(record)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
-    
-    func randomString(length: Int) -> String {
-        
-        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let len = UInt32(letters.length)
-        
-        var randomString = ""
-        
-        for _ in 0 ..< length {
-            let rand = arc4random_uniform(len)
-            var nextChar = letters.character(at: Int(rand))
-            randomString += NSString(characters: &nextChar, length: 1) as String
-        }
-        
-        return randomString
-    }
-    
     func updateAudioMeter(timer: Timer) {
-        
         if audioRecorder.isRecording {
             let hr = Int((audioRecorder.currentTime / 60) / 60)
             let min = Int(audioRecorder.currentTime / 60)
@@ -248,16 +201,8 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
-    func getDocumentsDirectory() -> URL {
-        
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        let documentsDirectory = paths[0]
-        return documentsDirectory
-    }
-    
     //MARK:- Audio recoder delegate methods
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        
         if !flag {
             finishAudioRecording(success: false)
         }
@@ -265,62 +210,14 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     
 }
 
-
-
-// MARK: - UITableViewDataSource
-extension HomeViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return records.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let record = records[indexPath.row]
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Record", for: indexPath) as! RecordsTableViewCell
-        
-        let duration = record.value(forKey: "duration") as? Int
-        let startTime = record.value(forKey: "startTime") as? Date
-        
-        if(duration != nil && startTime != nil){
-            
-            cell.durationLabel.text = "(\(durationText(duration: duration!)))"
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "h:mm a"
-        
-            cell.startLabel.text = formatter.string(from: startTime!)
-            let endTime = startTime?.addingTimeInterval(Double(duration!))
-            cell.endLabel.text = formatter.string(from: endTime!)
-        }
-        
-        
-        
-        return cell
-    }
-    
-    func durationText(duration: Int) -> String {
-        let hours = duration / 3600
-        let minutes = (duration % 3600) / 60
-        let seconds = (duration % 60)
-        
-        if(hours > 0) {
-            return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
-        } else {
-            return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
-        }
-    }
-}
-
 // MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let record = records[indexPath.row]
-        if let recordId = record.value(forKey: "id") as? String {
+        let record = recordsDataSource?.records[indexPath.row]
+        if let recordId = record?.value(forKey: "id") as? String {
             
-            let audioFilename = getDocumentsDirectory().appendingPathComponent("\(recordId).m4a")
+            let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(recordId).m4a")
             do{
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
                 try AVAudioSession.sharedInstance().setActive(true)
