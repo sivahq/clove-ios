@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6B5F6A6A1F4B5A57001CE9B3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A691F4B5A57001CE9B3 /* HomeViewController.swift */; };
-		6B5F6A751F4CBA93001CE9B3 /* RecordsTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A741F4CBA93001CE9B3 /* RecordsTableItem.swift */; };
-		6B5F6A771F4CBEBA001CE9B3 /* RecordsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A761F4CBEBA001CE9B3 /* RecordsTableDataSource.swift */; };
+		6B5F6A751F4CBA93001CE9B3 /* StreamsTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A741F4CBA93001CE9B3 /* StreamsTableItem.swift */; };
+		6B5F6A771F4CBEBA001CE9B3 /* StreamsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A761F4CBEBA001CE9B3 /* StreamsTableDataSource.swift */; };
 		6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */; };
 		6B857CAF1F45FD4600FF06C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */; };
 		6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B857CB51F45FD4600FF06C8 /* Clove.xcdatamodeld */; };
@@ -19,8 +19,8 @@
 
 /* Begin PBXFileReference section */
 		6B5F6A691F4B5A57001CE9B3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Home/HomeViewController.swift; sourceTree = "<group>"; };
-		6B5F6A741F4CBA93001CE9B3 /* RecordsTableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordsTableItem.swift; path = Clove/Records/RecordsTableItem.swift; sourceTree = "<group>"; };
-		6B5F6A761F4CBEBA001CE9B3 /* RecordsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RecordsTableDataSource.swift; path = Clove/Records/RecordsTableDataSource.swift; sourceTree = "<group>"; };
+		6B5F6A741F4CBA93001CE9B3 /* StreamsTableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableItem.swift; path = Clove/Records/StreamsTableItem.swift; sourceTree = "<group>"; };
+		6B5F6A761F4CBEBA001CE9B3 /* StreamsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableDataSource.swift; path = Clove/Records/StreamsTableDataSource.swift; sourceTree = "<group>"; };
 		6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Clove/Utilities/Utilities.swift; sourceTree = "<group>"; };
 		6B857CAB1F45FD4600FF06C8 /* Clove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,13 +49,13 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
-		6B5F6A731F4B8CF9001CE9B3 /* Records */ = {
+		6B5F6A731F4B8CF9001CE9B3 /* Streams */ = {
 			isa = PBXGroup;
 			children = (
-				6B5F6A741F4CBA93001CE9B3 /* RecordsTableItem.swift */,
-				6B5F6A761F4CBEBA001CE9B3 /* RecordsTableDataSource.swift */,
+				6B5F6A741F4CBA93001CE9B3 /* StreamsTableItem.swift */,
+				6B5F6A761F4CBEBA001CE9B3 /* StreamsTableDataSource.swift */,
 			);
-			name = Records;
+			name = Streams;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -89,7 +89,7 @@
 			children = (
 				6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */,
 				6B5F6A6B1F4B5A5D001CE9B3 /* Home */,
-				6B5F6A731F4B8CF9001CE9B3 /* Records */,
+				6B5F6A731F4B8CF9001CE9B3 /* Streams */,
 				6B5F6A7A1F4CC4EF001CE9B3 /* Utilities */,
 				6B857CB81F45FD4600FF06C8 /* Assets.xcassets */,
 				6B857CBA1F45FD4600FF06C8 /* LaunchScreen.storyboard */,
@@ -172,9 +172,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */,
-				6B5F6A771F4CBEBA001CE9B3 /* RecordsTableDataSource.swift in Sources */,
+				6B5F6A771F4CBEBA001CE9B3 /* StreamsTableDataSource.swift in Sources */,
 				6B857CAF1F45FD4600FF06C8 /* AppDelegate.swift in Sources */,
-				6B5F6A751F4CBA93001CE9B3 /* RecordsTableItem.swift in Sources */,
+				6B5F6A751F4CBA93001CE9B3 /* StreamsTableItem.swift in Sources */,
 				6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */,
 				6B5F6A6A1F4B5A57001CE9B3 /* HomeViewController.swift in Sources */,
 			);

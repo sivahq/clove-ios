@@ -1,5 +1,5 @@
 //
-//  RecordsTableDataSource.swift
+//  StreamsTableDataSource.swift
 //  Clove
 //
 //  Created by Sivaprakash Ragavan on 8/22/17.
@@ -9,9 +9,9 @@
 import UIKit
 import CoreData
 
-class RecordsTableDataSource: NSObject, UITableViewDataSource {
+class StreamsTableDataSource: NSObject, UITableViewDataSource {
 
-    var records: [NSManagedObject] = []
+    var streams: [NSManagedObject] = []
     var managedContext: NSManagedObjectContext!
     
     override init() {
@@ -19,26 +19,26 @@ class RecordsTableDataSource: NSObject, UITableViewDataSource {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         managedContext = appDelegate.persistentContainer.viewContext
 
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Record")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Stream")
         do {
-            records = try managedContext.fetch(fetchRequest)
+            streams = try managedContext.fetch(fetchRequest)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return records.count
+        return streams.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let record = records[indexPath.row]
+        let stream = streams[indexPath.row]
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Record", for: indexPath) as! RecordsTableItem
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StreamItem", for: indexPath) as! StreamsTableItem
         
-        let duration = record.value(forKey: "duration") as? Int
-        let startTime = record.value(forKey: "startTime") as? Date
+        let duration = stream.value(forKey: "duration") as? Int
+        let startTime = stream.value(forKey: "startTime") as? Date
         
         if(duration != nil && startTime != nil){
             
@@ -69,15 +69,15 @@ class RecordsTableDataSource: NSObject, UITableViewDataSource {
         }
     }
     
-    func addRecord(id: String, startTime: Date, duration: Int) {
-        let entity = NSEntityDescription.entity(forEntityName: "Record", in: managedContext)!
-        let record = NSManagedObject(entity: entity, insertInto: managedContext)
-        record.setValue(id, forKeyPath: "id")
-        record.setValue(startTime, forKeyPath: "startTime")
-        record.setValue(duration, forKeyPath: "duration")
+    func addStream(id: String, startTime: Date, duration: Int) {
+        let entity = NSEntityDescription.entity(forEntityName: "Stream", in: managedContext)!
+        let stream = NSManagedObject(entity: entity, insertInto: managedContext)
+        stream.setValue(id, forKeyPath: "id")
+        stream.setValue(startTime, forKeyPath: "startTime")
+        stream.setValue(duration, forKeyPath: "duration")
         do {
             try managedContext.save()
-            records.append(record)
+            streams.append(stream)
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }

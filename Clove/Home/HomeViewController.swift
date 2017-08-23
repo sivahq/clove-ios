@@ -17,16 +17,16 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     var meterTimer:Timer!
     var isAudioRecordingGranted: Bool!
     
-    var recordInProgress: String!
+    var streamInProgress: String!
     var startTime: Date!
     
-    var recordsDataSource: RecordsTableDataSource?
+    var streamsDataSource: StreamsTableDataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recordsDataSource = RecordsTableDataSource()
-        tableView.dataSource = recordsDataSource
+        streamsDataSource = StreamsTableDataSource()
+        tableView.dataSource = streamsDataSource
 
         initViewElements()
         
@@ -94,7 +94,7 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     lazy var tableView: UITableView! = {
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.register(RecordsTableItem.self, forCellReuseIdentifier: "Record")
+        view.register(StreamsTableItem.self, forCellReuseIdentifier: "StreamItem")
         view.delegate = self
         return view
     }()
@@ -140,8 +140,8 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
                     AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
                 ]
                 //Create audio file name URL
-                recordInProgress = Utilities.randomString(length: 12)
-                let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(recordInProgress!).m4a")
+                streamInProgress = Utilities.randomString(length: 12)
+                let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(streamInProgress!).m4a")
                 //Create the audio recording, and assign ourselves as the delegate
                 audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
                 audioRecorder.delegate = self
@@ -161,14 +161,14 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func finishAudioRecording(success: Bool) {
-        if(recordInProgress != nil) {
+        if(streamInProgress != nil) {
             audioRecorder.stop()
             audioRecorder = nil
             meterTimer.invalidate()
             recordingTimeLabel.text = String(format: "%02d:%02d:%02d", 0, 0, 0)
             
             var duration = 0
-            let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(recordInProgress!).m4a")
+            let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(streamInProgress!).m4a")
             do{
                 audioPlayer = try AVAudioPlayer(contentsOf:audioFilename)
                 duration = Int(audioPlayer.duration)
@@ -177,8 +177,8 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
                 print("Could not find duration. \(error), \(error.userInfo)")
             }
             
-            recordsDataSource?.addRecord(id: recordInProgress!, startTime: startTime, duration: duration)
-            recordInProgress = nil
+            streamsDataSource?.addStream(id: streamInProgress!, startTime: startTime, duration: duration)
+            streamInProgress = nil
             startTime = nil
             self.tableView.reloadData()
             
@@ -214,10 +214,10 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let record = recordsDataSource?.records[indexPath.row]
-        if let recordId = record?.value(forKey: "id") as? String {
+        let stream = streamsDataSource?.streams[indexPath.row]
+        if let streamId = stream?.value(forKey: "id") as? String {
             
-            let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(recordId).m4a")
+            let audioFilename = Utilities.getDocumentsDirectory().appendingPathComponent("\(streamId).m4a")
             do{
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
                 try AVAudioSession.sharedInstance().setActive(true)

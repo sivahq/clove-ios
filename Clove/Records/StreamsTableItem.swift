@@ -1,5 +1,5 @@
 //
-//  RecordsTableItem.swift
+//  StreamsTableItem.swift
 //  Clove
 //
 //  Created by Sivaprakash Ragavan on 8/21/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecordsTableItem: UITableViewCell {
+class StreamsTableItem: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
