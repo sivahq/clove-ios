@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6B5F6A751F4CBA93001CE9B3 /* StreamsTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A741F4CBA93001CE9B3 /* StreamsTableItem.swift */; };
-		6B5F6A771F4CBEBA001CE9B3 /* StreamsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A761F4CBEBA001CE9B3 /* StreamsTableDataSource.swift */; };
 		6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */; };
-		6B676D5F1F4D34BD0002C130 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D5E1F4D34BD0002C130 /* RoomViewController.swift */; };
+		6B676D681F4DCDD80002C130 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D651F4DCDD80002C130 /* RoomViewController.swift */; };
+		6B676D691F4DCDD80002C130 /* StreamsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */; };
+		6B676D6A1F4DCDD80002C130 /* StreamsTableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D671F4DCDD80002C130 /* StreamsTableItem.swift */; };
+		6B676D6C1F4DCDFA0002C130 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D6B1F4DCDFA0002C130 /* HomeViewController.swift */; };
 		6B857CAF1F45FD4600FF06C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */; };
 		6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B857CB51F45FD4600FF06C8 /* Clove.xcdatamodeld */; };
 		6B857CB91F45FD4600FF06C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B857CB81F45FD4600FF06C8 /* Assets.xcassets */; };
@@ -18,10 +19,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6B5F6A741F4CBA93001CE9B3 /* StreamsTableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableItem.swift; path = Clove/Records/StreamsTableItem.swift; sourceTree = "<group>"; };
-		6B5F6A761F4CBEBA001CE9B3 /* StreamsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableDataSource.swift; path = Clove/Records/StreamsTableDataSource.swift; sourceTree = "<group>"; };
 		6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Clove/Utilities/Utilities.swift; sourceTree = "<group>"; };
-		6B676D5E1F4D34BD0002C130 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomViewController.swift; path = Rooms/RoomViewController.swift; sourceTree = "<group>"; };
+		6B676D651F4DCDD80002C130 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomViewController.swift; path = Room/RoomViewController.swift; sourceTree = "<group>"; };
+		6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableDataSource.swift; path = Room/StreamsTableDataSource.swift; sourceTree = "<group>"; };
+		6B676D671F4DCDD80002C130 /* StreamsTableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableItem.swift; path = Room/StreamsTableItem.swift; sourceTree = "<group>"; };
+		6B676D6B1F4DCDFA0002C130 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Home/HomeViewController.swift; sourceTree = "<group>"; };
 		6B857CAB1F45FD4600FF06C8 /* Clove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Clove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B857CB61F45FD4600FF06C8 /* Clove.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Clove.xcdatamodel; sourceTree = "<group>"; };
@@ -44,19 +46,11 @@
 		6B5F6A6B1F4B5A5D001CE9B3 /* Room */ = {
 			isa = PBXGroup;
 			children = (
-				6B676D5E1F4D34BD0002C130 /* RoomViewController.swift */,
+				6B676D651F4DCDD80002C130 /* RoomViewController.swift */,
+				6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */,
+				6B676D671F4DCDD80002C130 /* StreamsTableItem.swift */,
 			);
 			name = Room;
-			sourceTree = "<group>";
-		};
-		6B5F6A731F4B8CF9001CE9B3 /* Streams */ = {
-			isa = PBXGroup;
-			children = (
-				6B5F6A741F4CBA93001CE9B3 /* StreamsTableItem.swift */,
-				6B5F6A761F4CBEBA001CE9B3 /* StreamsTableDataSource.swift */,
-			);
-			name = Streams;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		6B5F6A7A1F4CC4EF001CE9B3 /* Utilities */ = {
@@ -66,6 +60,14 @@
 			);
 			name = Utilities;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		6B676D641F4DCD340002C130 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6B676D6B1F4DCDFA0002C130 /* HomeViewController.swift */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 		6B857CA21F45FD4600FF06C8 = {
@@ -88,8 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */,
+				6B676D641F4DCD340002C130 /* Home */,
 				6B5F6A6B1F4B5A5D001CE9B3 /* Room */,
-				6B5F6A731F4B8CF9001CE9B3 /* Streams */,
 				6B5F6A7A1F4CC4EF001CE9B3 /* Utilities */,
 				6B857CB81F45FD4600FF06C8 /* Assets.xcassets */,
 				6B857CBA1F45FD4600FF06C8 /* LaunchScreen.storyboard */,
@@ -172,11 +174,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */,
-				6B5F6A771F4CBEBA001CE9B3 /* StreamsTableDataSource.swift in Sources */,
 				6B857CAF1F45FD4600FF06C8 /* AppDelegate.swift in Sources */,
-				6B676D5F1F4D34BD0002C130 /* RoomViewController.swift in Sources */,
-				6B5F6A751F4CBA93001CE9B3 /* StreamsTableItem.swift in Sources */,
+				6B676D691F4DCDD80002C130 /* StreamsTableDataSource.swift in Sources */,
+				6B676D6A1F4DCDD80002C130 /* StreamsTableItem.swift in Sources */,
 				6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */,
+				6B676D6C1F4DCDFA0002C130 /* HomeViewController.swift in Sources */,
+				6B676D681F4DCDD80002C130 /* RoomViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
