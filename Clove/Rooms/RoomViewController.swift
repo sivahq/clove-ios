@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  RoomViewController.swift
 //  Clove
 //
 //  Created by Sivaprakash Ragavan on 8/21/17.
@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class HomeViewController: UIViewController, AVAudioRecorderDelegate {
+class RoomViewController: UIViewController, AVAudioRecorderDelegate {
     
     //Variables
     var audioRecorder: AVAudioRecorder!
@@ -211,7 +211,7 @@ class HomeViewController: UIViewController, AVAudioRecorderDelegate {
 }
 
 // MARK: - UITableViewDelegate
-extension HomeViewController: UITableViewDelegate {
+extension RoomViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let stream = streamsDataSource?.streams[indexPath.row]

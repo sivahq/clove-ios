@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
         
-        let viewController = HomeViewController()
+        let viewController = RoomViewController()
         //viewController.dataProvider = BirthdaysListDataProvider()
         window!.rootViewController = UINavigationController(rootViewController: viewController)
         window!.makeKeyAndVisible()
