@@ -8,8 +8,11 @@
 
 import UIKit
 import AVFoundation
+import CoreData
 
 class RoomViewController: UIViewController, AVAudioRecorderDelegate {
+    
+    var room: NSManagedObject?
     
     //Variables
     var audioRecorder: AVAudioRecorder!
@@ -25,8 +28,9 @@ class RoomViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        streamsDataSource = StreamsTableDataSource()
+        streamsDataSource = StreamsTableDataSource(room: room!)
         tableView.dataSource = streamsDataSource
+        streamsDataSource?.registerCellsForTableView(tableView: tableView)
 
         initViewElements()
         
@@ -100,6 +104,8 @@ class RoomViewController: UIViewController, AVAudioRecorderDelegate {
     }()
     
     func initViewElements() {
+        let roomName = room?.value(forKey: "name") as? String
+        navigationItem.title = roomName
         view.addSubview(recordingTimeLabel)
         view.addSubview(recordButton)
         view.addSubview(stopButton)
@@ -177,10 +183,11 @@ class RoomViewController: UIViewController, AVAudioRecorderDelegate {
                 print("Could not find duration. \(error), \(error.userInfo)")
             }
             
-            streamsDataSource?.addStream(id: streamInProgress!, startTime: startTime, duration: duration)
+            let stream = StreamAPI.addStream(room: room!, id: streamInProgress!, startTime: startTime, duration: duration)
+            streamsDataSource?.streams.append(stream)
+            tableView.reloadData()
             streamInProgress = nil
             startTime = nil
-            self.tableView.reloadData()
             
             if success {
                 print("Recording finished successfully.")

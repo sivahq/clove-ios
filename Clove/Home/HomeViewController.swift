@@ -10,26 +10,72 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    var roomsDataSource: RoomsTableDataSource?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        roomsDataSource = RoomsTableDataSource()
+        tableView.dataSource = roomsDataSource
+        roomsDataSource?.registerCellsForTableView(tableView: tableView)
+        
+        initViewElements()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func updateViewConstraints() {
+        positionViewElements()
+        super.updateViewConstraints()
     }
-    */
+    
+    lazy var tableView: UITableView! = {
+        let view = UITableView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
+        return view
+    }()
+    
+    func initViewElements() {
+        navigationItem.title = "Clove"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRoom(_:)))
+        view.addSubview(tableView)
+        view.setNeedsUpdateConstraints()
+    }
+    
+    func positionViewElements() {
+        tableView.topAnchor.constraint(equalTo: topLayoutGuide.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: -16).isActive = true
+        view.layoutMarginsGuide.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -16).isActive = true
+        bottomLayoutGuide.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+    }
+    
+    func addRoom(_ sender: AnyObject) {
+        let alert = UIAlertController(title: "New Room", message: "Add a new room", preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save", style: .default) {
+            [unowned self] action in
+            guard let textField = alert.textFields?.first,
+            let name = textField.text else { return }
+            
+            let room = RoomAPI.addRoom(id: Utilities.randomString(length: 8), name: name)
+            self.roomsDataSource?.rooms.append(room)
+            self.tableView.reloadData()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        alert.addTextField()
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+}
 
+// MARK: - UITableViewDelegate
+extension HomeViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let room = roomsDataSource?.rooms[indexPath.row]
+        let roomViewController = RoomViewController()
+        roomViewController.room = room
+        navigationController?.pushViewController(roomViewController, animated: true)
+    }
 }

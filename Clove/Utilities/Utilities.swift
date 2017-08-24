@@ -10,7 +10,6 @@ import UIKit
 
 class Utilities {
     static func randomString(length: Int) -> String {
-        
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let len = UInt32(letters.length)
         
@@ -26,10 +25,21 @@ class Utilities {
     }
     
     static func getDocumentsDirectory() -> URL {
-        
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
+    }
+    
+    static func durationText(duration: Int) -> String {
+        let hours = duration / 3600
+        let minutes = (duration % 3600) / 60
+        let seconds = (duration % 60)
+        
+        if(hours > 0) {
+            return "\(String(format: "%02d", hours)):\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
+        } else {
+            return "\(String(format: "%02d", minutes)):\(String(format: "%02d", seconds))"
+        }
     }
 }
 
