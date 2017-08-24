@@ -73,9 +73,9 @@
 		6B676D641F4DCD340002C130 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				6B676D6B1F4DCDFA0002C130 /* HomeViewController.swift */,
 				6B676D6D1F4DD2B80002C130 /* RoomsTableDataSource.swift */,
 				6B676D6E1F4DD2B80002C130 /* RoomsTableItem.swift */,
-				6B676D6B1F4DCDFA0002C130 /* HomeViewController.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
