@@ -106,6 +106,7 @@ class RoomViewController: UIViewController, AVAudioRecorderDelegate {
     func initViewElements() {
         let roomName = room?.value(forKey: "name") as? String
         navigationItem.title = roomName
+        view.backgroundColor = UIColor.white
         view.addSubview(recordingTimeLabel)
         view.addSubview(recordButton)
         view.addSubview(stopButton)

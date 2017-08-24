@@ -33,6 +33,7 @@ class RoomsTableItem: UITableViewCell {
 
     func initViewElements() {
         addSubview(nameLabel)
+        selectionStyle = UITableViewCellSelectionStyle.none
         setNeedsUpdateConstraints()
     }
     
