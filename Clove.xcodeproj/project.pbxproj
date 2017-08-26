@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		580F53AB133A810E8ADB507A /* Pods_Clove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9BAAD293145DA83BF43E157 /* Pods_Clove.framework */; };
 		6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */; };
 		6B676D681F4DCDD80002C130 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D651F4DCDD80002C130 /* RoomViewController.swift */; };
 		6B676D691F4DCDD80002C130 /* StreamsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A426CDA26466215A4D54C63 /* Pods-Clove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clove.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clove/Pods-Clove.release.xcconfig"; sourceTree = "<group>"; };
 		6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Clove/Utilities/Utilities.swift; sourceTree = "<group>"; };
 		6B676D651F4DCDD80002C130 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomViewController.swift; path = Room/RoomViewController.swift; sourceTree = "<group>"; };
 		6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableDataSource.swift; path = Room/StreamsTableDataSource.swift; sourceTree = "<group>"; };
@@ -38,6 +40,8 @@
 		6B857CB81F45FD4600FF06C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B857CBB1F45FD4600FF06C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B857CBD1F45FD4600FF06C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC74B750E805B764165E3B78 /* Pods-Clove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clove.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clove/Pods-Clove.debug.xcconfig"; sourceTree = "<group>"; };
+		E9BAAD293145DA83BF43E157 /* Pods_Clove.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clove.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,12 +49,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				580F53AB133A810E8ADB507A /* Pods_Clove.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11987C70FD322A350B0A739A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CC74B750E805B764165E3B78 /* Pods-Clove.debug.xcconfig */,
+				3A426CDA26466215A4D54C63 /* Pods-Clove.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		6B5F6A6B1F4B5A5D001CE9B3 /* Room */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +108,8 @@
 			children = (
 				6B857CAD1F45FD4600FF06C8 /* Clove */,
 				6B857CAC1F45FD4600FF06C8 /* Products */,
+				11987C70FD322A350B0A739A /* Pods */,
+				D217A457B4EE72979E0AA470 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +137,14 @@
 			path = Clove;
 			sourceTree = "<group>";
 		};
+		D217A457B4EE72979E0AA470 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E9BAAD293145DA83BF43E157 /* Pods_Clove.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -128,9 +152,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6B857CC01F45FD4600FF06C8 /* Build configuration list for PBXNativeTarget "Clove" */;
 			buildPhases = (
+				14D0A4D379EC38686D7677D8 /* [CP] Check Pods Manifest.lock */,
 				6B857CA71F45FD4600FF06C8 /* Sources */,
 				6B857CA81F45FD4600FF06C8 /* Frameworks */,
 				6B857CA91F45FD4600FF06C8 /* Resources */,
+				A30C525014430B3537E8AEE6 /* [CP] Embed Pods Frameworks */,
+				79001679A00B5363292CEE65 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -187,6 +214,62 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		14D0A4D379EC38686D7677D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Clove-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79001679A00B5363292CEE65 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clove/Pods-Clove-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A30C525014430B3537E8AEE6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Clove/Pods-Clove-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Clove/Pods-Clove-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6B857CA71F45FD4600FF06C8 /* Sources */ = {
@@ -316,6 +399,7 @@
 		};
 		6B857CC11F45FD4600FF06C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CC74B750E805B764165E3B78 /* Pods-Clove.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7S2WW76HXL;
@@ -329,6 +413,7 @@
 		};
 		6B857CC21F45FD4600FF06C8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3A426CDA26466215A4D54C63 /* Pods-Clove.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 7S2WW76HXL;
