@@ -35,6 +35,7 @@ class HomeViewController: UIViewController {
     }()
     
     func initViewElements() {
+        navigationController?.setNavigationBarHidden(false, animated: false)
         navigationItem.title = "Clove"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRoom(_:)))
         view.addSubview(tableView)

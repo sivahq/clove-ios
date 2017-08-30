@@ -82,7 +82,7 @@ class RoomViewController: UIViewController, AVAudioRecorderDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(audioRecorderAction(_:)), for: .touchDown)
         view.setTitle("Record", for: .normal)
-        view.setTitleColor(UIColor.blue, for: .normal)
+        view.setTitleColor(UIColor.primaryColor(), for: .normal)
         return view
     }()
     
@@ -91,7 +91,7 @@ class RoomViewController: UIViewController, AVAudioRecorderDelegate {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(stopAudioRecordingAction(_:)), for: .touchDown)
         view.setTitle("Stop", for: .normal)
-        view.setTitleColor(UIColor.blue, for: .normal)
+        view.setTitleColor(UIColor.primaryColor(), for: .normal)
         return view
     }()
     

@@ -19,9 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         let configuration = ParseClientConfiguration {
-            $0.applicationId = "APPLICATION_ID"
-            $0.clientKey = "MASTER_KEY"
-            $0.server = "http://localhost:1337/parse"
+            $0.applicationId = "CLOVEPARSE"
+            $0.clientKey = "CLOVEMASTERKEY"
+            $0.server = "http://api.clovehq.com/parse"
         }
         
         Parse.initialize(with: configuration)
@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
         
-        let viewController = HomeViewController()
+        let viewController = StartViewController()
         window!.rootViewController = UINavigationController(rootViewController: viewController)
         window!.makeKeyAndVisible()
 

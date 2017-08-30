@@ -21,6 +21,9 @@
 		6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6B857CB51F45FD4600FF06C8 /* Clove.xcdatamodeld */; };
 		6B857CB91F45FD4600FF06C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B857CB81F45FD4600FF06C8 /* Assets.xcassets */; };
 		6B857CBC1F45FD4600FF06C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B857CBA1F45FD4600FF06C8 /* LaunchScreen.storyboard */; };
+		6BAA69BB1F52FFA20021A80D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA69BA1F52FFA20021A80D /* Colors.swift */; };
+		6BAA69BF1F530C810021A80D /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA69BE1F530C810021A80D /* StartViewController.swift */; };
+		6BAA69C11F54668C0021A80D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAA69C01F54668C0021A80D /* CustomTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		6B857CB81F45FD4600FF06C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B857CBB1F45FD4600FF06C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B857CBD1F45FD4600FF06C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6BAA69BA1F52FFA20021A80D /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Colors.swift; path = Clove/Utilities/Colors.swift; sourceTree = "<group>"; };
+		6BAA69BE1F530C810021A80D /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StartViewController.swift; path = Start/StartViewController.swift; sourceTree = "<group>"; };
+		6BAA69C01F54668C0021A80D /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTextField.swift; path = Components/CustomTextField.swift; sourceTree = "<group>"; };
 		CC74B750E805B764165E3B78 /* Pods-Clove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clove.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clove/Pods-Clove.debug.xcconfig"; sourceTree = "<group>"; };
 		E9BAAD293145DA83BF43E157 /* Pods_Clove.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clove.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -79,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */,
+				6BAA69BA1F52FFA20021A80D /* Colors.swift */,
 			);
 			name = Utilities;
 			path = ..;
@@ -125,8 +132,10 @@
 			isa = PBXGroup;
 			children = (
 				6B857CAE1F45FD4600FF06C8 /* AppDelegate.swift */,
+				6BAA69B71F52F78F0021A80D /* Start */,
 				6B676D641F4DCD340002C130 /* Home */,
 				6B5F6A6B1F4B5A5D001CE9B3 /* Room */,
+				6BAA69C21F5466900021A80D /* Components */,
 				6B676D741F4DD9A20002C130 /* API */,
 				6B5F6A7A1F4CC4EF001CE9B3 /* Utilities */,
 				6B857CB81F45FD4600FF06C8 /* Assets.xcassets */,
@@ -135,6 +144,22 @@
 				6B857CB51F45FD4600FF06C8 /* Clove.xcdatamodeld */,
 			);
 			path = Clove;
+			sourceTree = "<group>";
+		};
+		6BAA69B71F52F78F0021A80D /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				6BAA69BE1F530C810021A80D /* StartViewController.swift */,
+			);
+			name = Start;
+			sourceTree = "<group>";
+		};
+		6BAA69C21F5466900021A80D /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				6BAA69C01F54668C0021A80D /* CustomTextField.swift */,
+			);
+			name = Components;
 			sourceTree = "<group>";
 		};
 		D217A457B4EE72979E0AA470 /* Frameworks */ = {
@@ -276,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BAA69C11F54668C0021A80D /* CustomTextField.swift in Sources */,
 				6B676D6F1F4DD2B80002C130 /* RoomsTableDataSource.swift in Sources */,
 				6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */,
 				6B857CAF1F45FD4600FF06C8 /* AppDelegate.swift in Sources */,
@@ -283,6 +309,8 @@
 				6B676D761F4DFF4B0002C130 /* StreamAPI.swift in Sources */,
 				6B676D6A1F4DCDD80002C130 /* StreamsTableItem.swift in Sources */,
 				6B676D701F4DD2B80002C130 /* RoomsTableItem.swift in Sources */,
+				6BAA69BB1F52FFA20021A80D /* Colors.swift in Sources */,
+				6BAA69BF1F530C810021A80D /* StartViewController.swift in Sources */,
 				6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */,
 				6B676D6C1F4DCDFA0002C130 /* HomeViewController.swift in Sources */,
 				6B676D681F4DCDD80002C130 /* RoomViewController.swift in Sources */,
