@@ -18,6 +18,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationItem.title = "Welcome back!"
     }
     
     override func updateViewConstraints() {
@@ -27,11 +28,11 @@ class LoginViewController: UIViewController {
     
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = "Welcome back!"
+        view.text = ""
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
-        view.textColor = UIColor.secondaryColor()
-        view.font = UIFont.boldSystemFont(ofSize: 20)
+        view.textColor = UIColor.red
+        view.font = UIFont.systemFont(ofSize: 14)
         return view
     }()
     
@@ -82,9 +83,16 @@ class LoginViewController: UIViewController {
         return view
     }()
     
+    lazy var activityIndicator: UIActivityIndicatorView! = {
+        let view = UIActivityIndicatorView.init(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.alpha = 0.3
+        view.hidesWhenStopped = true
+        view.backgroundColor = UIColor.gray
+        return view
+    }()
+    
     func initViewElements() {
-        view.backgroundColor = UIColor.white
-        navigationItem.title = "Clove"
         textFields.append(emailField)
         textFields.append(passwordField)
         view.addSubview(messageLabel)
@@ -92,16 +100,18 @@ class LoginViewController: UIViewController {
         view.addSubview(passwordField)
         view.addSubview(loginButton)
         view.setNeedsUpdateConstraints()
+        view.addSubview(activityIndicator)
+        view.backgroundColor = UIColor.white
     }
     
     func positionViewElements() {
         
-        messageLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 20).isActive = true
-        messageLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true
+        messageLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         messageLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
         
-        emailField.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 20).isActive = true
+        emailField.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 10).isActive = true
         emailField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20).isActive = true
         emailField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
         emailField.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -115,6 +125,12 @@ class LoginViewController: UIViewController {
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         loginButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        activityIndicator.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
+        activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 90).isActive = true
     }
     
     func loginAction(_ sender: AnyObject) {
@@ -129,17 +145,17 @@ class LoginViewController: UIViewController {
         let username = emailField.text!
         let password = passwordField.text!
         
-        messageLabel.text = "Logging in..."
-        loginButton.isUserInteractionEnabled = false
+        messageLabel.text = ""
+        activityIndicator.startAnimating()
         
         PFUser.logInWithUsername(inBackground: username, password: password) { user, error in
+            self.activityIndicator.stopAnimating()
             if user != nil {
                 let viewController = HomeViewController()
                 self.navigationController?.setViewControllers([viewController], animated: true)
             } else if let error = error {
                 print("Error during login", error)
                 self.messageLabel.text = "Could not login"
-                self.loginButton.isUserInteractionEnabled = true
             }
         }
     }
