@@ -28,9 +28,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.backgroundColor = UIColor.white
+
+        let currentUser = PFUser.current();
+        if(currentUser != nil) {
+            let viewController = HomeViewController()
+            window!.rootViewController = UINavigationController(rootViewController: viewController)
+        } else {
+            let viewController = StartViewController()
+            window!.rootViewController = UINavigationController(rootViewController: viewController)
+        }
         
-        let viewController = StartViewController()
-        window!.rootViewController = UINavigationController(rootViewController: viewController)
         window!.makeKeyAndVisible()
 
         return true
