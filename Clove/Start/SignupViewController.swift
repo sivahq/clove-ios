@@ -33,6 +33,7 @@ class SignupViewController: UIViewController {
         view.textAlignment = .center
         view.textColor = UIColor.red
         view.font = UIFont.systemFont(ofSize: 14)
+        view.numberOfLines = 2
         return view
     }()
     
@@ -107,7 +108,7 @@ class SignupViewController: UIViewController {
     func positionViewElements() {
         
         messageLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true
-        messageLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        messageLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         messageLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
         
@@ -153,9 +154,21 @@ class SignupViewController: UIViewController {
             if (succeeded) {
                 let viewController = HomeViewController()
                 self.navigationController?.setViewControllers([viewController], animated: true)
-            } else if let error = error {
-                print("Error during signup", error)
-                self.messageLabel.text = "Could not create your account."
+            } else if let error: NSError = error as NSError? {
+
+                var errorMessage: String!
+                
+                switch error.code {
+                case PFErrorCode.errorUsernameTaken.rawValue:
+                    errorMessage = "Email already in use."
+                case 100:
+                    errorMessage = "Please check your internet connection\nand try again."
+                default:
+                    errorMessage = "Could not create your account.\nPlease try again after few minutes."
+                }
+
+                print("Error during signup : \(errorMessage)", error)
+                self.messageLabel.text = errorMessage
             }
         }
 

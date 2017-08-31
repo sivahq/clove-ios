@@ -33,6 +33,7 @@ class LoginViewController: UIViewController {
         view.textAlignment = .center
         view.textColor = UIColor.red
         view.font = UIFont.systemFont(ofSize: 14)
+        view.numberOfLines = 2
         return view
     }()
     
@@ -107,7 +108,7 @@ class LoginViewController: UIViewController {
     func positionViewElements() {
         
         messageLabel.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 10).isActive = true
-        messageLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        messageLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         messageLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
         
@@ -153,9 +154,21 @@ class LoginViewController: UIViewController {
             if user != nil {
                 let viewController = HomeViewController()
                 self.navigationController?.setViewControllers([viewController], animated: true)
-            } else if let error = error {
-                print("Error during login", error)
-                self.messageLabel.text = "Could not login"
+            } else if let error: NSError = error as NSError? {
+                
+                var errorMessage: String!
+                
+                switch error.code {
+                case 101:
+                    errorMessage = "Incorrect email and/or password."
+                case 100:
+                    errorMessage = "Please check your internet connection\nand try again."
+                default:
+                    errorMessage = "Could not login.\nPlease try again after few minutes."
+                }
+                
+                print("Error during login : \(errorMessage)", error)
+                self.messageLabel.text = errorMessage
             }
         }
     }
