@@ -47,7 +47,7 @@ class StartViewController: UIViewController {
 
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = "Capture every voice\nRelive the moments that matter"
+        view.text = "Capture every voice\nin your own Audio Journal"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
         view.numberOfLines = 3
@@ -98,12 +98,12 @@ class StartViewController: UIViewController {
         logoView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
         titleLabel.topAnchor.constraint(equalTo: logoView.bottomAnchor).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
 
-        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50).isActive = true
-        messageLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 45).isActive = true
+        messageLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
         messageLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
         
