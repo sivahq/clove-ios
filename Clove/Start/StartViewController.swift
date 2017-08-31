@@ -46,7 +46,7 @@ class StartViewController: UIViewController {
 
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = "Capture every voice.\nFind moments that matter"
+        view.text = "Capture every voice\nand relive the ones that matter"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
         view.numberOfLines = 2
