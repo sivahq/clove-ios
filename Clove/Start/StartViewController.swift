@@ -47,10 +47,10 @@ class StartViewController: UIViewController {
 
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = "Capture every voice\nand relive the ones that matter"
+        view.text = "Capture every voice\nRelive the moments that matter"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
-        view.numberOfLines = 2
+        view.numberOfLines = 3
         view.font = UIFont.systemFont(ofSize: 18)
         view.textColor = UIColor.white
         return view
@@ -60,8 +60,8 @@ class StartViewController: UIViewController {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(signupAction(_:)), for: .touchDown)
-        view.setTitle("Get Started", for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        view.setTitle("Get started", for: .normal)
+        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         view.layer.cornerRadius = 5
         view.backgroundColor = UIColor.white
         view.setTitleColor(UIColor.primaryColor(), for: .normal)
@@ -73,7 +73,7 @@ class StartViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(loginAction(_:)), for: .touchDown)
         view.setTitle("Log in", for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         view.layer.cornerRadius = 5
         view.backgroundColor = UIColor.primaryColor()
         view.setTitleColor(UIColor.white, for: .normal)
@@ -103,7 +103,7 @@ class StartViewController: UIViewController {
         titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
 
         messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50).isActive = true
-        messageLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        messageLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
         messageLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
         
