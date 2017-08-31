@@ -72,6 +72,23 @@ class SignupViewController: UIViewController {
         return view
     }()
     
+    lazy var passwordConfirmField: CustomTextField! = {
+        let view = CustomTextField()
+        view.isSecureTextEntry = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.placeholder = "Confirm Password"
+        view.borderStyle = UITextBorderStyle.roundedRect
+        view.autocorrectionType = UITextAutocorrectionType.no
+        view.keyboardType = UIKeyboardType.default
+        view.returnKeyType = UIReturnKeyType.done
+        view.autocorrectionType = .no
+        view.autocapitalizationType = .none
+        view.spellCheckingType = .no
+        view.delegate = self
+        view.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        return view
+    }()
+    
     lazy var signupButton: UIButton! = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -96,9 +113,11 @@ class SignupViewController: UIViewController {
     func initViewElements() {
         textFields.append(emailField)
         textFields.append(passwordField)
+        textFields.append(passwordConfirmField)
         view.addSubview(messageLabel)
         view.addSubview(emailField)
         view.addSubview(passwordField)
+        view.addSubview(passwordConfirmField)
         view.addSubview(signupButton)
         view.setNeedsUpdateConstraints()
         view.addSubview(activityIndicator)
@@ -121,8 +140,13 @@ class SignupViewController: UIViewController {
         passwordField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20).isActive = true
         passwordField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
         passwordField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        
-        signupButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 20).isActive = true
+
+        passwordConfirmField.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 20).isActive = true
+        passwordConfirmField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20).isActive = true
+        passwordConfirmField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
+        passwordConfirmField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+
+        signupButton.topAnchor.constraint(equalTo: passwordConfirmField.bottomAnchor, constant: 20).isActive = true
         signupButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         signupButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -138,7 +162,15 @@ class SignupViewController: UIViewController {
     }
     
     func signUp() {
-        if(emailField.text == "" || passwordField.text == "" ) {
+        if(emailField.text == "" || passwordField.text == "" || passwordConfirmField.text == "" ) {
+            return
+        }
+        
+        if(passwordField.text != passwordConfirmField.text) {
+            messageLabel.text = "Passwords don't match."
+            messageLabel.textColor = UIColor.red
+            messageLabel.font = UIFont.systemFont(ofSize: 14)
+            messageLabel.numberOfLines = 2
             return
         }
         
