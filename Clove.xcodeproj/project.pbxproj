@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		580F53AB133A810E8ADB507A /* Pods_Clove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9BAAD293145DA83BF43E157 /* Pods_Clove.framework */; };
+		6B0EE3CC1F58659E003347C2 /* PasswordResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0EE3CB1F58659E003347C2 /* PasswordResetViewController.swift */; };
 		6B5F6A791F4CC4E9001CE9B3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */; };
 		6B676D681F4DCDD80002C130 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D651F4DCDD80002C130 /* RoomViewController.swift */; };
 		6B676D691F4DCDD80002C130 /* StreamsTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		3A426CDA26466215A4D54C63 /* Pods-Clove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clove.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clove/Pods-Clove.release.xcconfig"; sourceTree = "<group>"; };
+		6B0EE3CB1F58659E003347C2 /* PasswordResetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PasswordResetViewController.swift; path = Start/PasswordResetViewController.swift; sourceTree = "<group>"; };
 		6B5F6A781F4CC4E9001CE9B3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = Clove/Utilities/Utilities.swift; sourceTree = "<group>"; };
 		6B676D651F4DCDD80002C130 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RoomViewController.swift; path = Room/RoomViewController.swift; sourceTree = "<group>"; };
 		6B676D661F4DCDD80002C130 /* StreamsTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamsTableDataSource.swift; path = Room/StreamsTableDataSource.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				6BAA69BE1F530C810021A80D /* StartViewController.swift */,
 				6BAA69C51F5757050021A80D /* LoginViewController.swift */,
 				6BAA69C71F575B4C0021A80D /* SignupViewController.swift */,
+				6B0EE3CB1F58659E003347C2 /* PasswordResetViewController.swift */,
 			);
 			name = Start;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				6B676D701F4DD2B80002C130 /* RoomsTableItem.swift in Sources */,
 				6BAA69BB1F52FFA20021A80D /* Colors.swift in Sources */,
 				6BAA69C81F575B4C0021A80D /* SignupViewController.swift in Sources */,
+				6B0EE3CC1F58659E003347C2 /* PasswordResetViewController.swift in Sources */,
 				6BAA69BF1F530C810021A80D /* StartViewController.swift in Sources */,
 				6B857CB71F45FD4600FF06C8 /* Clove.xcdatamodeld in Sources */,
 				6B676D6C1F4DCDFA0002C130 /* HomeViewController.swift in Sources */,

@@ -1,15 +1,15 @@
 //
-//  LoginViewController.swift
+//  PasswordResetViewController.swift
 //  Clove
 //
-//  Created by Sivaprakash Ragavan on 8/30/17.
+//  Created by Sivaprakash Ragavan on 8/31/17.
 //  Copyright © 2017 Clove HQ. All rights reserved.
 //
 
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController {
+class PasswordResetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationItem.title = "Log in"
+        navigationItem.title = "Password Reset"
     }
     
     override func updateViewConstraints() {
@@ -28,7 +28,7 @@ class LoginViewController: UIViewController {
     
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = "Welcome back!"
+        view.text = "Forgot your password?"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
         view.textColor = UIColor.gray
@@ -36,8 +36,6 @@ class LoginViewController: UIViewController {
         view.numberOfLines = 1
         return view
     }()
-    
-    var textFields: [UITextField] = []
     
     lazy var emailField: CustomTextField! = {
         let view = CustomTextField()
@@ -55,43 +53,15 @@ class LoginViewController: UIViewController {
         return view
     }()
     
-    lazy var passwordField: CustomTextField! = {
-        let view = CustomTextField()
-        view.isSecureTextEntry = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.placeholder = "Password"
-        view.borderStyle = UITextBorderStyle.roundedRect
-        view.autocorrectionType = UITextAutocorrectionType.no
-        view.keyboardType = UIKeyboardType.default
-        view.returnKeyType = UIReturnKeyType.done
-        view.autocorrectionType = .no
-        view.autocapitalizationType = .none
-        view.spellCheckingType = .no
-        view.delegate = self
-        view.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        return view
-    }()
-    
-    lazy var loginButton: UIButton! = {
+    lazy var resetButton: UIButton! = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(loginAction(_:)), for: .touchDown)
-        view.setTitle("Log in", for: .normal)
+        view.addTarget(self, action: #selector(resetAction(_:)), for: .touchDown)
+        view.setTitle("Reset it", for: .normal)
         view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         view.layer.cornerRadius = 5
         view.backgroundColor = UIColor.primaryColor()
         view.setTitleColor(UIColor.white, for: .normal)
-        return view
-    }()
-
-    lazy var forgotPasswordButton: UIButton! = {
-        let view = UIButton()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(forgotPasswordAction(_:)), for: .touchDown)
-        view.setTitle("Forgot your password? Reset it.", for: .normal)
-        view.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        view.layer.cornerRadius = 5
-        view.setTitleColor(UIColor.primaryColor(), for: .normal)
         return view
     }()
     
@@ -105,13 +75,9 @@ class LoginViewController: UIViewController {
     }()
     
     func initViewElements() {
-        textFields.append(emailField)
-        textFields.append(passwordField)
         view.addSubview(messageLabel)
         view.addSubview(emailField)
-        view.addSubview(passwordField)
-        view.addSubview(loginButton)
-        view.addSubview(forgotPasswordButton)
+        view.addSubview(resetButton)
         view.setNeedsUpdateConstraints()
         view.addSubview(activityIndicator)
         view.backgroundColor = UIColor.white
@@ -129,64 +95,52 @@ class LoginViewController: UIViewController {
         emailField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
         emailField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        passwordField.topAnchor.constraint(equalTo: emailField.bottomAnchor, constant: 20).isActive = true
-        passwordField.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 20).isActive = true
-        passwordField.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -20).isActive = true
-        passwordField.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        resetButton.topAnchor.constraint(equalTo: emailField.bottomAnchor, constant: 20).isActive = true
+        resetButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        resetButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        resetButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        loginButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 20).isActive = true
-        loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        loginButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        forgotPasswordButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10).isActive = true
-        forgotPasswordButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        forgotPasswordButton.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
-        forgotPasswordButton.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
-
         activityIndicator.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
         activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 110).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 80).isActive = true
     }
     
-    func loginAction(_ sender: AnyObject) {
-        logIn()
+    func resetAction(_ sender: AnyObject) {
+        reset()
     }
     
-    func logIn() {
-        if(emailField.text == "" || passwordField.text == "" ) {
+    func reset() {
+        if(emailField.text == "") {
             return
         }
         
         let username = emailField.text!
-        let password = passwordField.text!
         
-        messageLabel.text = "Verifying email/password..."
+        messageLabel.text = "Sending an email with a reset link..."
         messageLabel.textColor = UIColor.gray
         messageLabel.font = UIFont.systemFont(ofSize: 14)
         messageLabel.numberOfLines = 2
         activityIndicator.startAnimating()
         
-        PFUser.logInWithUsername(inBackground: username, password: password) { user, error in
+        PFUser.requestPasswordResetForEmail(inBackground: username) { succeeded, error in
             self.activityIndicator.stopAnimating()
-            if user != nil {
-                let viewController = HomeViewController()
-                self.navigationController?.setViewControllers([viewController], animated: true)
+            if succeeded {
+                self.messageLabel.text = "We sent you an email.\nPlease check your inbox."
+                self.messageLabel.textColor = UIColor.green
+                self.messageLabel.font = UIFont.systemFont(ofSize: 14)
+                self.messageLabel.numberOfLines = 2
             } else if let error: NSError = error as NSError? {
-                
                 var errorMessage: String!
                 
                 switch error.code {
-                case 101:
-                    errorMessage = "Incorrect email and/or password."
                 case 100:
                     errorMessage = "Please check your internet connection\nand try again."
                 default:
-                    errorMessage = "Could not login.\nPlease try again after few minutes."
+                    errorMessage = "Could not reset your password.\nPlease try again after few minutes."
                 }
                 
-                print("Error during login : \(errorMessage)", error)
+                print("Error during password reset : \(errorMessage)", error)
                 
                 self.messageLabel.text = errorMessage
                 self.messageLabel.textColor = UIColor.red
@@ -195,25 +149,13 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    
-    func forgotPasswordAction(_ sender: AnyObject) {
-        let viewController = PasswordResetViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
 }
 
 // MARK:- ---> Textfield Delegates
-extension LoginViewController: UITextFieldDelegate {
+extension PasswordResetViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let i = textFields.index(of: textField) else { return false }
-        if i + 1 < textFields.count {
-            textFields[i + 1].becomeFirstResponder()
-            return true
-        }
         textField.resignFirstResponder()
-        logIn()
-        
+        reset()
         return true
     }
 }
