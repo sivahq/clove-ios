@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationItem.title = "Welcome back!"
+        navigationItem.title = "Log in"
     }
     
     override func updateViewConstraints() {
@@ -28,12 +28,12 @@ class LoginViewController: UIViewController {
     
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = ""
+        view.text = "Welcome back!"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
-        view.textColor = UIColor.red
-        view.font = UIFont.systemFont(ofSize: 14)
-        view.numberOfLines = 2
+        view.textColor = UIColor.gray
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        view.numberOfLines = 1
         return view
     }()
     
@@ -145,7 +145,10 @@ class LoginViewController: UIViewController {
         let username = emailField.text!
         let password = passwordField.text!
         
-        messageLabel.text = ""
+        messageLabel.text = "Verifying email/password..."
+        messageLabel.textColor = UIColor.gray
+        messageLabel.font = UIFont.systemFont(ofSize: 14)
+        messageLabel.numberOfLines = 2
         activityIndicator.startAnimating()
         
         PFUser.logInWithUsername(inBackground: username, password: password) { user, error in
@@ -167,7 +170,11 @@ class LoginViewController: UIViewController {
                 }
                 
                 print("Error during login : \(errorMessage)", error)
+                
                 self.messageLabel.text = errorMessage
+                self.messageLabel.textColor = UIColor.red
+                self.messageLabel.font = UIFont.systemFont(ofSize: 14)
+                self.messageLabel.numberOfLines = 2
             }
         }
     }

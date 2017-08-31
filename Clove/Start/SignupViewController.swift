@@ -28,12 +28,12 @@ class SignupViewController: UIViewController {
     
     lazy var messageLabel: UILabel! = {
         let view = UILabel()
-        view.text = ""
+        view.text = "Let's create your account"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
-        view.textColor = UIColor.red
-        view.font = UIFont.systemFont(ofSize: 14)
-        view.numberOfLines = 2
+        view.textColor = UIColor.gray
+        view.font = UIFont.boldSystemFont(ofSize: 20)
+        view.numberOfLines = 1
         return view
     }()
     
@@ -142,7 +142,10 @@ class SignupViewController: UIViewController {
             return
         }
         
-        messageLabel.text = ""
+        messageLabel.text = "Creating your account..."
+        messageLabel.textColor = UIColor.gray
+        messageLabel.font = UIFont.systemFont(ofSize: 14)
+        messageLabel.numberOfLines = 2
         activityIndicator.startAnimating()
         
         let user = PFUser()
@@ -167,7 +170,11 @@ class SignupViewController: UIViewController {
                 }
 
                 print("Error during signup : \(errorMessage)", error)
+                
                 self.messageLabel.text = errorMessage
+                self.messageLabel.textColor = UIColor.red
+                self.messageLabel.font = UIFont.systemFont(ofSize: 14)
+                self.messageLabel.numberOfLines = 2
             }
         }
 
