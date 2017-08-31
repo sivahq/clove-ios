@@ -15,6 +15,10 @@ class StartViewController: UIViewController {
         initViewElements()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
@@ -35,8 +39,8 @@ class StartViewController: UIViewController {
         view.text = "Clove"
         view.translatesAutoresizingMaskIntoConstraints = false
         view.textAlignment = .center
-        view.textColor = UIColor.primaryColor()
-        view.font = UIFont.boldSystemFont(ofSize: 40)
+        view.textColor = UIColor.white
+        view.font = UIFont.boldSystemFont(ofSize: 50)
         return view
     }()
 
@@ -47,7 +51,7 @@ class StartViewController: UIViewController {
         view.textAlignment = .center
         view.numberOfLines = 2
         view.font = UIFont.systemFont(ofSize: 18)
-        view.textColor = UIColor.secondaryColor()
+        view.textColor = UIColor.white
         return view
     }()
 
@@ -56,10 +60,10 @@ class StartViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(signupAction(_:)), for: .touchDown)
         view.setTitle("Get Started", for: .normal)
-        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor.primaryColor()
-        view.setTitleColor(UIColor.white, for: .normal)
+        view.backgroundColor = UIColor.white
+        view.setTitleColor(UIColor.primaryColor(), for: .normal)
         return view
     }()
     
@@ -70,13 +74,13 @@ class StartViewController: UIViewController {
         view.setTitle("Log in", for: .normal)
         view.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         view.layer.cornerRadius = 5
-        view.backgroundColor = UIColor.white
-        view.setTitleColor(UIColor.primaryColor(), for: .normal)
+        view.backgroundColor = UIColor.primaryColor()
+        view.setTitleColor(UIColor.white, for: .normal)
         return view
     }()
 
     func initViewElements() {
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.primaryColor()
         view.addSubview(logoView)
         view.addSubview(titleLabel)
         view.addSubview(messageLabel)
@@ -87,27 +91,27 @@ class StartViewController: UIViewController {
     
     func positionViewElements() {
 
-        logoView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 80).isActive = true
+        logoView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 20).isActive = true
         logoView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         logoView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         logoView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
-        titleLabel.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: 30).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: logoView.bottomAnchor).isActive = true
+        titleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
 
-        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
+        messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 50).isActive = true
         messageLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
         messageLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
         messageLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -10).isActive = true
         
-        signupButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 30).isActive = true
-        signupButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        signupButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        signupButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 15).isActive = true
+        signupButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        signupButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        loginButton.topAnchor.constraint(equalTo: signupButton.bottomAnchor, constant: 20).isActive = true
+        loginButton.topAnchor.constraint(equalTo: signupButton.bottomAnchor, constant: 15).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         loginButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
