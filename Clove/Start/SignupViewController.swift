@@ -127,11 +127,10 @@ class SignupViewController: UIViewController {
         signupButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        activityIndicator.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
         activityIndicator.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
         activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 90).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 110).isActive = true
     }
     
     func signupAction(_ sender: AnyObject) {
