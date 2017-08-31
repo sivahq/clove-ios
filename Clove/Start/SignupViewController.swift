@@ -182,6 +182,7 @@ class SignupViewController: UIViewController {
         
         let user = PFUser()
         user.username = emailField.text
+        user.email = emailField.text
         user.password = passwordField.text
         user.signUpInBackground { succeeded, error in
             self.activityIndicator.stopAnimating()
