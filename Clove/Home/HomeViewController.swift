@@ -36,8 +36,20 @@ class HomeViewController: UIViewController {
     
     func initViewElements() {
         navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationItem.title = "Clove"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addRoom(_:)))
+        
+        let settingsButton = UIBarButtonItem(title: NSString(string: "\u{2699}\u{0000FE0E}") as String, style: .plain, target: self, action: #selector(addRoom(_:)))
+        let font = UIFont.systemFont(ofSize: 24)
+        let attributes = [NSFontAttributeName : font]
+        settingsButton.setTitleTextAttributes(attributes, for: .normal)
+        navigationItem.rightBarButtonItem = settingsButton
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Journal \u{25BE}\u{0000FE0E}", style: .plain, target: self, action: #selector(addRoom(_:)))
+        navigationController?.navigationBar.barTintColor = UIColor.primaryLightColor()
+        navigationController?.navigationBar.tintColor = UIColor.white
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        navigationController?.navigationBar.isTranslucent = false;
+        navigationController?.navigationBar.barStyle = .blackTranslucent
+        
         view.addSubview(tableView)
         view.setNeedsUpdateConstraints()
     }

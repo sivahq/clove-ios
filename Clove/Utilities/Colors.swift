@@ -14,6 +14,10 @@ extension UIColor {
         return UIColor(rgb: 0xEA4335)
     }
     
+    static func primaryLightColor() -> UIColor {
+        return UIColor(rgb: 0xF35E51)
+    }
+    
     static func secondaryColor() -> UIColor {
         return UIColor.gray
     }
